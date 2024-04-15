@@ -198,7 +198,7 @@ function deleteArticle(url, request) {
     userArticleIds.splice(userArticleIds.indexOf(id), 1);
     response.status = 204;
   } else {
-    response.status = 400;
+    response.status = 404;
   }
 
   return response;
@@ -240,33 +240,13 @@ function downvoteArticle(url, request) {
   return response;
 }
 
-function upvote(item, username) {
-  if (item.downvotedBy.includes(username)) {
-    item.downvotedBy.splice(item.downvotedBy.indexOf(username), 1);
-  }
-  if (!item.upvotedBy.includes(username)) {
-    item.upvotedBy.push(username);
-  }
-  return item;
-}
-
-function downvote(item, username) {
-  if (item.upvotedBy.includes(username)) {
-    item.upvotedBy.splice(item.upvotedBy.indexOf(username), 1);
-  }
-  if (!item.downvotedBy.includes(username)) {
-    item.downvotedBy.push(username);
-  }
-  return item;
-}
-
 function createComment(url, request) {
   const requestComment = request.body && request.body.comment;
   const response = {};
 
   if (requestComment && requestComment.body &&
-    requestComment.articleId && database.articles[requestComment.articleId] &&
-    requestComment.username && database.users[requestComment.username]) {
+      requestComment.articleId && database.articles[requestComment.articleId] &&
+      requestComment.username && database.users[requestComment.username]) {
     const comment = {
       id: database.nextCommentId++,
       body: requestComment.body,
@@ -289,19 +269,19 @@ function createComment(url, request) {
   return response;
 }
 
-
 function updateComment(url, request) {
   const id = Number(url.split('/').filter(segment => segment)[1]);
   const savedComment = database.comments[id];
   const requestComment = request.body && request.body.comment;
   const response = {};
 
-  if (!id || !requestComment) {
+  if (!requestComment || !requestComment.body) {
     response.status = 400;
   } else if (!savedComment) {
     response.status = 404;
   } else {
-    savedComment.body = requestComment.body || savedComment.body;
+    savedComment.body = requestComment.body;
+
     response.body = {comment: savedComment};
     response.status = 200;
   }
@@ -324,6 +304,7 @@ function deleteComment(url, request) {
   } else {
     response.status = 404;
   }
+
   return response;
 }
 
@@ -363,6 +344,26 @@ function downvoteComment(url, request) {
   return response;
 }
 
+function upvote(item, username) {
+  if (item.downvotedBy.includes(username)) {
+    item.downvotedBy.splice(item.downvotedBy.indexOf(username), 1);
+  }
+  if (!item.upvotedBy.includes(username)) {
+    item.upvotedBy.push(username);
+  }
+  return item;
+}
+
+function downvote(item, username) {
+  if (item.upvotedBy.includes(username)) {
+    item.upvotedBy.splice(item.upvotedBy.indexOf(username), 1);
+  }
+  if (!item.downvotedBy.includes(username)) {
+    item.downvotedBy.push(username);
+  }
+  return item;
+}
+
 function loadDatabase() {
   return dbYaml.load();
 }
@@ -370,6 +371,7 @@ function loadDatabase() {
 function saveDatabase() {
   dbYaml.save();
 }
+
 // Write all code above this line.
 
 const http = require('http');
@@ -454,7 +456,7 @@ const server = http.createServer(requestHandler);
 
 server.listen(port, (err) => {
   if (err) {
-    return console.log('Server did not start succesfully: ', err);
+    return console.log('Server did not start successfully: ', err);
   }
 
   console.log(`Server is listening on ${port}`);
