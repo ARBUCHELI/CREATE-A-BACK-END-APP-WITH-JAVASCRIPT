@@ -1,0 +1,454 @@
+# LEARN NODE.JS
+---------------
+
+* Introduction
+--------------
+2 min
+For a long time, the browser was the only place JavaScript code could be executed. Web developers had to use a different programming language on the front-end than the back-end. It also 
+meant that, even as JavaScript evolved into a more robust and powerful language, it remained a front-end only language.
+
+Though multiple attempts to create off-browser JavaScript environments have been attempted, Node.js, invented by Ryan Dahl in 2009, found unprecedented popularity and is currently being 
+used by numerous top-tier companies including Netflix, Uber, Paypal, and eBay. Node.js is a JavaScript runtime, or an environment that allows us to execute JavaScript code outside of the 
+browser. A “runtime” converts code written in a high-level, human-readable, programming language and compiles it down to code the computer can execute.
+
+Though Node was created with the goal of building web servers and web applications in JavaScript, it can also be used for creating command-line applications or desktop applications. In 
+this lesson, we’ll explore some features of Node so you start to feel comfortable with running JavaScript in the Node environment and gain some familiarity with features unique to Node. 
+For more advanced development, Node can be combined with any number of robust frameworks like the Express.js framework for creating effective web application back-ends.
+
+There’s more to learn about Node than we could ever fit in one lesson. We’ll try to point to great resources like MDN and the Node.js documentation. Take your time exploring and use the 
+documentation.
+
+* Instructions
+--------------
+Checkpoint 1 Passed
+1.
+In this lesson, we’ll be providing you a terminal with Node.js already installed. If you’d like to download Node on your local machine and follow along, check out this article.
+
+Let’s see what version of Node we have installed. Type node -v in the terminal and then press and hit enter (or return).
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+* The Node REPL
+---------------
+6 min
+REPL is an abbreviation for read–eval–print loop. It’s a program that loops, or repeatedly cycles, through three different states: a read state where the program reads input from a user, 
+the eval state where the program evaluates the user’s input, and the print state where the program prints out its evaluation to a console. Then it loops through these states again.
+
+When you install Node, it comes with a built-in JavaScript REPL. You can access the REPL by typing the command node (with nothing after it) into the terminal and hitting enter. A > 
+character will show up in the terminal indicating the REPL is running and prompting your input. The Node REPL will evaluate your input line by line.
+
+By default, you indicate the input is ready for eval when you hit enter. If you’d like to type multiple lines and then have them evaluated at once you can type .editor while in the REPL. 
+Once in “editor” mode, you can type control + d when you’re ready for the input to be evaluated. Each session of the REPL has a single shared memory; you can access any variables or 
+functions you define until you exit the REPL.
+
+A REPL can be extremely useful for performing calculations, learning a language, and developing code. It’s a place where you can explore language features and try things out while 
+receiving immediate feedback. Figuring out how to do this outside of the browser or a website can be really empowering.
+
+The Node environment contains a number of Node-specific global elements in addition to those built into the JavaScript language. Every Node-specific global property sits inside the the 
+Node global object. This object contains a number of useful properties and methods that are available anywhere in the Node environment.
+
+Let’s try out the Node REPL. This will be a good way for you to explore the Node global object!
+
+* Instructions
+--------------
+Checkpoint 1 Passed
+1.
+Let’s enter the Node REPL. Type node in the terminal and press enter.
+
+Checkpoint 2 Passed
+2.
+Experiment on your own within the REPL to get a better sense of it. Here are some suggestions for things to try:
+
+	. Access the global object. You can console.log(global) or, since the REPL displays the return of each evaluated line, simply type global and then enter.
+
+	. Woah… it looks huge. A lot of that is because of the global.process object. Check out an easier to read list of the properties on the global object with Object.keys(global).
+
+	. The global object has a lot of useful properties and methods, and it’s not common to add any to it. However, it is just an object, so we can! Add a property to the global 
+	object, eg. global.cat = 'meow!'.
+
+	. Now print or return the property you just added:
+
+> console.log(global.cat)
+'meow!'
+
+	. If you’re familiar with running JavaScript on the browser, you’ve likely encountered the Window object. Here’s one major way that Node differs: try to access the Window object 
+	(this will throw an error). The Window object is the JavaScript object in the browser that holds the DOM, since we don’t have a DOM here, there’s no Window object.
+
+You’ll learn more about the global object as you explore Node, but remember that, at its core, it’s just a JavaScript object!
+
+bash
+----
+$ node
+> console.log(global)
+{ global: [Circular],
+  process: 
+   process {
+     title: '/usr/bin/node',
+     version: 'v7.10.1',
+     moduleLoadList: 
+      [ 'Binding contextify',
+        'Binding natives',
+        'NativeModule events',
+        'Binding config',
+        'Binding icu',
+        'NativeModule util',
+        'Binding uv',
+        'NativeModule buffer',
+        'Binding buffer',
+        'Binding util',
+        'NativeModule internal/util',
+        'NativeModule internal/buffer',
+        'NativeModule timers',
+        'Binding timer_wrap',
+        'NativeModule internal/linkedlist',
+        'NativeModule assert',
+        'NativeModule internal/process',
+        'NativeModule internal/process/warning',
+        'NativeModule internal/process/next_tick',
+        'NativeModule internal/process/promises',
+        'NativeModule internal/process/stdio',
+        'Binding constants',
+        'NativeModule internal/url',
+        'NativeModule internal/querystring',
+        'Binding url',
+        'NativeModule querystring',
+        'NativeModule os',
+        'Binding os',
+        'NativeModule tty',
+        'NativeModule net',
+        'NativeModule stream',
+        'NativeModule internal/streams/legacy',
+        'NativeModule _stream_readable',
+        'NativeModule internal/streams/BufferList',
+        'NativeModule _stream_writable',
+        'NativeModule _stream_duplex',
+        'NativeModule _stream_transform',
+        'NativeModule _stream_passthrough',
+        'NativeModule internal/net',
+        'Binding cares_wrap',
+        'Binding tty_wrap',
+        'Binding tcp_wrap',
+        'Binding pipe_wrap',
+        'Binding stream_wrap',
+        'NativeModule internal/repl',
+        'NativeModule readline',
+        'NativeModule internal/readline',
+        'NativeModule repl',
+        'NativeModule internal/module',
+        'NativeModule vm',
+        'NativeModule path',
+        'NativeModule fs',
+        'Binding fs',
+        'Binding fs_event_wrap',
+        'NativeModule internal/fs',
+        'NativeModule console',
+        'Binding signal_wrap',
+        'NativeModule module',
+        'NativeModule domain',
+        'NativeModule string_decoder' ],
+     versions: 
+      { http_parser: '2.7.0',
+        node: '7.10.1',
+        v8: '5.5.372.43',
+        uv: '1.11.0',
+        zlib: '1.2.11',
+        ares: '1.10.1-DEV',
+        modules: '51',
+        openssl: '1.0.2k',
+        icu: '58.2',
+        unicode: '9.0',
+        cldr: '30.0.3',
+        tz: '2016j' },
+     arch: 'x64',
+     platform: 'linux',
+     release: 
+      { name: 'node',
+        sourceUrl: 'https://nodejs.org/download/release/v7.10.1/node-v7.10.1.tar.gz',
+        headersUrl: 'https://nodejs.org/download/release/v7.10.1/node-v7.10.1-headers.tar.gz' },
+     argv: [ '/usr/bin/nodejs' ],
+     execArgv: [ '--max-old-space-size=200' ],
+     env: 
+      { HOSTNAME: '1c3834addbf0',
+        GEM_HOME: '/home/ccuser/.gem/ruby/2.3.0',
+        TERM: 'xterm',
+        EXPIRES_AT: '1713200025',
+        NLTK_DATA: '/home/ccuser/.nltk_data',
+        PATH: '/home/ccuser/.bin:/home/ccuser/node_modules/.bin:/home/ccuser/.gem/ruby/2.3.0/bin:/home/ccuser/.bin:/home/ccuser/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        _: '/usr/bin/node',
+        CODEX_RUNNER_PATH: '/var/codecademy/codex/runners',
+        PWD: '/home/ccuser/workspace/srg-blank-workspace',
+        SESSION_ID: '4b168326-4627-4e60-9fa9-8fd94d71f5c0',
+        LANG: 'en_US.UTF-8',
+        TZ: 'Etc/UTC',
+        LOG_LEVEL: '2',
+        HOME: '/home/ccuser',
+        SHLVL: '2',
+        WORKSPACE_SERVICE_HOST: 'https://workspace.production-eks.codecademy.com',
+        EIN_IMAGE: 'node',
+        PYTHONPATH: '/var/codecademy/runner_contexts/python:' },
+     pid: 43,
+     features: 
+      { debug: false,
+        uv: true,
+        ipv6: true,
+        tls_npn: true,
+        tls_alpn: true,
+        tls_sni: true,
+        tls_ocsp: true,
+        tls: true },
+     _needImmediateCallback: false,
+     execPath: '/usr/bin/nodejs',
+     debugPort: 5858,
+     _startProfilerIdleNotifier: [Function: _startProfilerIdleNotifier],
+     _stopProfilerIdleNotifier: [Function: _stopProfilerIdleNotifier],
+     _getActiveRequests: [Function: _getActiveRequests],
+     _getActiveHandles: [Function: _getActiveHandles],
+     reallyExit: [Function: reallyExit],
+     abort: [Function: abort],
+     chdir: [Function: chdir],
+     cwd: [Function: cwd],
+     umask: [Function: umask],
+     getuid: [Function: getuid],
+     geteuid: [Function: geteuid],
+     setuid: [Function: setuid],
+     seteuid: [Function: seteuid],
+     setgid: [Function: setgid],
+     setegid: [Function: setegid],
+     getgid: [Function: getgid],
+     getegid: [Function: getegid],
+     getgroups: [Function: getgroups],
+     setgroups: [Function: setgroups],
+     initgroups: [Function: initgroups],
+     _kill: [Function: _kill],
+     _debugProcess: [Function: _debugProcess],
+     _debugPause: [Function: _debugPause],
+     _debugEnd: [Function: _debugEnd],
+     hrtime: [Function: hrtime],
+     cpuUsage: [Function: cpuUsage],
+     dlopen: [Function: dlopen],
+     uptime: [Function: uptime],
+     memoryUsage: [Function: memoryUsage],
+     binding: [Function: binding],
+     _linkedBinding: [Function: _linkedBinding],
+     _events: 
+      { warning: [Function],
+        newListener: [Function],
+        removeListener: [Function],
+        SIGWINCH: [Object] },
+     _rawDebug: [Function],
+     _eventsCount: 4,
+     domain: [Getter/Setter],
+     _maxListeners: undefined,
+     _fatalException: [Function],
+     _exiting: false,
+     assert: [Function],
+     config: { target_defaults: [Object], variables: [Object] },
+     emitWarning: [Function],
+     nextTick: [Function: nextTick],
+     _tickCallback: [Function: _tickDomainCallback],
+     _tickDomainCallback: [Function: _tickDomainCallback],
+     stdout: [Getter],
+     stderr: [Getter],
+     stdin: [Getter],
+     openStdin: [Function],
+     exit: [Function],
+     kill: [Function],
+     argv0: '/usr/bin/node' },
+  Buffer: 
+   { [Function: Buffer]
+     poolSize: 8192,
+     from: [Function],
+     alloc: [Function],
+     allocUnsafe: [Function],
+     allocUnsafeSlow: [Function],
+     isBuffer: [Function: isBuffer],
+     compare: [Function: compare],
+     isEncoding: [Function],
+     concat: [Function],
+     byteLength: [Function: byteLength] },
+  clearImmediate: [Function],
+  clearInterval: [Function],
+  clearTimeout: [Function],
+  setImmediate: [Function],
+  setInterval: [Function],
+  setTimeout: [Function],
+  console: [Getter],
+  module: 
+   Module {
+     id: '<repl>',
+     exports: {},
+     parent: undefined,
+     filename: null,
+     loaded: false,
+     children: [],
+     paths: 
+      [ '/home/ccuser/workspace/srg-blank-workspace/repl/node_modules',
+        '/home/ccuser/workspace/srg-blank-workspace/node_modules',
+        '/home/ccuser/workspace/node_modules',
+        '/home/ccuser/node_modules',
+        '/home/node_modules',
+        '/node_modules',
+        '/home/ccuser/.node_modules',
+        '/home/ccuser/.node_libraries',
+        '/usr/lib/node' ] },
+  require: 
+   { [Function: require]
+     resolve: [Function: resolve],
+     main: undefined,
+     extensions: { '.js': [Function], '.json': [Function], '.node': [Function] },
+     cache: {} } }
+undefined
+> Object.keys(global)
+[ 'global',
+  'process',
+  'Buffer',
+  'clearImmediate',
+  'clearInterval',
+  'clearTimeout',
+  'setImmediate',
+  'setInterval',
+  'setTimeout',
+  'console',
+  'module',
+  'require' ]
+> global.cat = 'meow'
+'meow'
+> Object.keys(global)
+[ 'global',
+  'process',
+  'Buffer',
+  'clearImmediate',
+  'clearInterval',
+  'clearTimeout',
+  'setImmediate',
+  'setInterval',
+  'setTimeout',
+  'console',
+  'module',
+  'require',
+  'cat' ]
+> console.log(global.cat)
+meow
+undefined
+> 
+(To exit, press ^C again or type .exit)
+> 
+$ 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+* Running a Program with Node
+-----------------------------
+4 min
+Node was designed with server-side web development in mind and has a lot of thoughtful functionality towards that end. At its most simple, however, it provides the ability to run 
+JavaScript programs on our own computers instead of just in the browser’s console or embedded in HTML.
+
+In this lesson, we’ll explore some of the functionality and properties specific to the Node environment, but first, let’s see how we run a program.
+
+We’ll need to create a file with a .js extension. We’ll call ours myProgram.js. Next, we’ll open that file with a text editor and add our code:
+
+// Inside myProgram.js
+console.log('Hello World');
+
+Our code is complete! Now, we want to execute it. We’ll open our terminal and navigate to the directory that contains myProgram.js. Finally, we’ll type the command node myProgram.js into 
+our terminal.
+
+$ node myProgram.js
+
+The results of our program will print to the terminal.
+
+Hello World
+
+Let’s write a program and run it in Node.
+
+* Instructions
+--------------
+Checkpoint 1 Passed
+1.
+We’ve written a silly sentence JavaScript program in the app.js file. There are a number of variables assigned the string '____'. Replace each of them with words of the designated type:
+
+let adjective = 'silly';
+
+When you’re ready to move on to the next step, click the “Check Work” button.
+
+Checkpoint 2 Passed
+2.
+Let’s run the program in the terminal so we can see its output. Type node app.js in the terminal and press enter and then press “Check Work”. You should see the output of the program in 
+the terminal!
+
+app.js
+------
+let noun1 = 'man who walked on the moon';
+let adjective = 'loyal and naive';
+let noun2 = 'hillbilly'
+let verb = 'watch and swallow the lies of the u.s government on tv';
+let noun3 = 'chips and beer';
+
+
+console.log(`The world's first ${noun1} was a very ${adjective} ${noun2} who loved to ${verb} while eating ${noun3} for every meal.`);
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
