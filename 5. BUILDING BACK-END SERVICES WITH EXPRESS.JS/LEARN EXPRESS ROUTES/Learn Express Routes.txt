@@ -197,6 +197,141 @@ app.listen(PORT, () => {
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+* Matching Route Paths
+----------------------
+3 min
+Express tries to match requests by route, meaning that if we send a request to <server address>:<port number>/api-endpoint, the Express server will search through any registered routes in 
+order and try to match /api-endpoint.
+
+Express searches through routes in the order that they are registered in your code. The first one that is matched will be used, and its callback will be called.
+
+In the example to the right, you can see two .get() routes registered at /another-route and /expressions. When a GET /expressions request arrives to the Express server, it first checks 
+/another-route‘s path because it is registered before the /expressions route. Because /another-route does not match the path, Express moves on to the next registered middleware. Since the 
+route matches the path, the callback is invoked, and it sends a response.
+
+If there are no matching routes registered, or the Express server has not sent a response at the end of all matched routes, it will automatically send back a 404 Not Found response, 
+meaning that no routes were matched or no response was ultimately sent by the registered routes.
+
+* Instructions
+--------------
+Move on to the next exercise when you’re ready.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+* Getting A Single Expression
+-----------------------------
+12 min
+Routes become much more powerful when they can be used dynamically. Express servers provide this functionality with named route parameters. Parameters are route path segments that begin 
+with : in their Express route definitions. They act as wildcards, matching any text at that path segment. For example /monsters/:id will match both/monsters/1 and /monsters/45.
+
+Express parses any parameters, extracts their actual values, and attaches them as an object to the request object: req.params. This object’s keys are any parameter names in the route, and 
+each key’s value is the actual value of that field per request.
+
+const monsters = { 
+  hydra: { height: 3, age: 4 }, 
+  dragon: { height: 200, age: 350 } 
+};
+// GET /monsters/hydra
+app.get('/monsters/:name', (req, res, next) => {
+  console.log(req.params); // { name: 'hydra' }
+  res.send(monsters[req.params.name]);
+});
+
+In this code snippet, a .get() route is defined to match /monsters/:name path. When a GET request arrives for /monsters/hydra, the callback is called. Inside the callback, req.params is 
+an object with the key name and the value hydra, which was present in the actual request path.
+
+The appropriate monster is retrieved by name (the object key) from the monsters object and sent back to the client with res.send().
+
+* Instructions
+--------------
+Checkpoint 1 Passed
+1.
+Create a GET /expressions/:id get route that you will use to send back a single expression. You can use req.params object and the pre-written helper function getElementById(id, array) to 
+find the correct expression before sending it back.
+
+For instance, to find ID 560 from expressions, you would call getElementById(560, expressions);. This function returns the element object if it exists and undefined if it does not.
+
+Don’t forget to restart your server when you make changes to app.js. To test the Express Yourself machine, use the box in the upper-left corner to send a GET request for a specified ID.
+
+
+Hint
+The correct ID of the expression can be found using req.params.id.
+
+app.js
+------
+const express = require('express');
+const app = express();
+
+// Serves Express Yourself website
+app.use(express.static('public'));
+
+const { getElementById, seedElements } = require('./utils');
+
+const expressions = [];
+seedElements(expressions, 'expressions');
+
+const PORT = process.env.PORT || 4001;
+
+app.get('/expressions', (req, res, next) => {
+  res.send(expressions);
+});
+
+// Add a new call to app.get('/expressions/:id') here
+app.get('/expressions/:id', (req, res, next) => {
+  res.send(getElementById(req.params.id, expressions));
+})
+
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
+});
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
