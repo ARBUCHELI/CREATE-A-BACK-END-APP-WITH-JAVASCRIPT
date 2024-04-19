@@ -300,6 +300,93 @@ app.listen(PORT, () => {
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+* Code Challenge 9
+------------------
+1 min
+Code Challenge
+
+* Instructions
+--------------
+Checkpoint 1 Passed
+1.
+Mount the sauceRouter with app.use so that a GET /sauces request sends back the sauces array.
+
+
+Hint
+To use a router with app.use(), the syntax is app.use(path, routerInstance);
+
+app.js
+------
+const express = require('express');
+const app = express();
+
+const PORT = process.env.PORT || 4001;
+
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
+});
+
+const pastas = ['agnolotti', 'cavatelli', 'gemelli', 'tortellini'];
+
+app.get('/pastas', (req, res, next) => {
+  res.send(pastas);
+});
+
+const sauceRouter = express.Router();
+// Add your code here:
+sauceRouter.get('/sauces', (req, res, next) => {
+  res.send(sauces);
+})
+
+app.use('/sauces', sauceRouter);
+
+const sauces = ['carbonara', 'primavera', 'bolognese', 'puttanesca', 'fra diavolo']
+
+sauceRouter.get('/', (req, res, next) => {
+  res.send(sauces);
+});
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
