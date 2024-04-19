@@ -46,6 +46,36 @@ app.listen(PORT, () => {
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+* Code Challenge
+----------------
+2 min
+Code Challenge
+
+* Instructions
+--------------
+Checkpoint 1 Passed
+1.
+Write a GET /sausages route that sends back the whole sausageTypes array.
+
+app.js
+------
+const express = require('express');
+const app = express();
+
+const PORT = process.env.PORT || 4001;
+
+const sausageTypes = ['bratwurst', 'andouille', 'chorizo', 'boudin', 'kielbasa'];
+
+app.get('/sausages', (req, res, next) => {
+  res.send(sausageTypes);
+})
+
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
+});
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 
 
